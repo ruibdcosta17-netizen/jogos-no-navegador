@@ -13,16 +13,14 @@
 <section id="authScreen" class="auth-screen">
   <div class="auth-card">
     <div class="logo">🎮</div>
-    <h2 id="authTitle">Entra no jogo</h2>
-    <p id="authDescription">Cria a tua conta ou inicia sessão para entrares no Jogos no Navegador.</p>
-    <form id="authForm">
-      <label for="email">E-mail</label><input id="email" type="email" autocomplete="email" required placeholder="tu@exemplo.com">
-      <label for="password">Palavra-passe</label><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="Pelo menos 6 caracteres">
-      <button class="btn" id="submitAuth" type="submit">Iniciar sessão</button>
+    <h2>Como te chamas?</h2>
+    <p>Escolhe um nome de jogador para entrares na zona de jogos.</p>
+    <form id="nameForm">
+      <label for="playerName">Nome de jogador</label>
+      <input id="playerName" type="text" maxlength="20" autocomplete="nickname" required placeholder="Escreve o teu nome">
+      <button class="btn" type="submit">Entrar nos jogos</button>
     </form>
-    <button class="text-btn" id="forgotPassword" type="button">Esqueci-me da palavra-passe</button>
-    <div class="auth-switch"><span id="switchText">Ainda não tens conta?</span> <button class="text-btn" id="switchMode" type="button">Criar conta</button></div>
-    <div id="authNotice" class="notice" role="status"></div>
+    <div class="notice">Só precisas do teu nome. Não precisas de e-mail nem palavra-passe.</div>
   </div>
 </section>
 <div id="app" class="hidden">
@@ -32,34 +30,19 @@
   <input id="search" class="search" type="search" placeholder="🔎 Procurar jogos e sites..." aria-label="Procurar">
 </div></header>
 <main><section class="hero"><div class="eyebrow">A tua zona de jogo</div><h2>Escolhe. Clica. <span>Joga.</span></h2><p>Uma coleção de jogos e experiências para abrir diretamente no navegador. Pesquisa, filtra por categoria e guarda os teus favoritos.</p></section>
-<nav class="filters"><button class="filter active" data-filter="Todos">Todos</button><button class="filter" data-filter="Arcada">Arcada</button><button class="filter" data-filter="Condução">Condução</button><button class="filter" data-filter="Construção">Construção</button><button class="filter" data-filter="Clássicos">Clássicos</button><button class="filter" data-filter="Multijogador">Multijogador</button><button class="filter" data-filter="Favoritos">♥ Favoritos</button></nav>
+<nav class="filters"><button class="filter active" data-filter="Todos">Todos</button><button class="filter" data-filter="Arcada">Arcada</button><button class="filter" data-filter="Desporto">Desporto</button><button class="filter" data-filter="Condução">Condução</button><button class="filter" data-filter="Construção">Construção</button><button class="filter" data-filter="Clássicos">Clássicos</button><button class="filter" data-filter="Multijogador">Multijogador</button><button class="filter" data-filter="Favoritos">♥ Favoritos</button></nav>
 <div id="count"></div><section id="grid" class="grid"></section><div id="empty" class="empty">Não encontrei resultados. Experimenta outra pesquisa ou categoria.</div></main>
 <footer>Feito para jogar no navegador · Jogos no Navegador © <span id="year"></span><br>Os jogos e serviços são externos e têm as suas próprias regras.</footer>
 </div>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBX6rIzVFdyNObLl9YQaBXXszrXFXahTDI",
-  authDomain: "jogos-no-navegador.firebaseapp.com",
-  projectId: "jogos-no-navegador",
-  storageBucket: "jogos-no-navegador.firebasestorage.app",
-  messagingSenderId: "998716604136",
-  appId: "1:998716604136:web:cd58c225856dd1684e935d",
-  measurementId: "G-QRMHGQXH4E"
-};
-firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
-const authScreen=document.getElementById("authScreen"),app=document.getElementById("app"),authForm=document.getElementById("authForm"),authTitle=document.getElementById("authTitle"),authDescription=document.getElementById("authDescription"),submitAuth=document.getElementById("submitAuth"),switchText=document.getElementById("switchText"),switchMode=document.getElementById("switchMode"),authNotice=document.getElementById("authNotice");
-let creating=false;
-function setNotice(message){authNotice.textContent=message}
-switchMode.addEventListener("click",()=>{creating=!creating;authTitle.textContent=creating?"Criar conta":"Entra no jogo";authDescription.textContent=creating?"Regista-te com o teu e-mail e cria uma palavra-passe.":"Inicia sessão para entrares no Jogos no Navegador.";submitAuth.textContent=creating?"Criar conta":"Iniciar sessão";switchText.textContent=creating?"Já tens conta?":"Ainda não tens conta?";switchMode.textContent=creating?"Iniciar sessão":"Criar conta";document.getElementById("password").autocomplete=creating?"new-password":"current-password";setNotice("")});
-authForm.addEventListener("submit",async e=>{e.preventDefault();setNotice("A processar…");const email=document.getElementById("email").value.trim(),password=document.getElementById("password").value;try{if(creating){await auth.createUserWithEmailAndPassword(email,password);setNotice("Conta criada!")}else{await auth.signInWithEmailAndPassword(email,password);setNotice("Sessão iniciada!")}}catch(error){const messages={"auth/email-already-in-use":"Este e-mail já tem uma conta. Inicia sessão.","auth/invalid-email":"O e-mail não parece válido.","auth/weak-password":"A palavra-passe deve ter pelo menos 6 caracteres.","auth/user-not-found":"Não existe uma conta com este e-mail.","auth/wrong-password":"Palavra-passe incorreta.","auth/invalid-credential":"E-mail ou palavra-passe incorretos.","auth/too-many-requests":"Demasiadas tentativas. Tenta mais tarde.","auth/operation-not-allowed":"Ativa Email/Password nas definições do Firebase Authentication.","auth/network-request-failed":"Falha de ligação. Verifica a Internet."};setNotice(messages[error.code]||("Não foi possível entrar: "+error.message))}});
-document.getElementById("forgotPassword").addEventListener("click",async()=>{const email=document.getElementById("email").value.trim();if(!email){setNotice("Escreve primeiro o teu e-mail no campo acima.");return}try{await auth.sendPasswordResetEmail(email);setNotice("Se a conta existir, receberás um e-mail para repor a palavra-passe.")}catch(error){setNotice(error.code==="auth/invalid-email"?"Escreve um e-mail válido.":"Não foi possível enviar o e-mail de recuperação.")}});
-document.getElementById("logout").addEventListener("click",()=>auth.signOut());
-auth.onAuthStateChanged(user=>{authScreen.classList.toggle("hidden",!!user);app.classList.toggle("hidden",!user);if(user){document.getElementById("userEmail").textContent=user.email||"Jogador";render()}});
+const authScreen=document.getElementById("authScreen"),app=document.getElementById("app");
+const playerNameInput=document.getElementById("playerName");
+const storedPlayerName=localStorage.getItem("jnb-player-name")||"";
+if(storedPlayerName){playerNameInput.value=storedPlayerName;authScreen.classList.add("hidden");app.classList.remove("hidden");document.getElementById("userEmail").textContent="Jogador: "+storedPlayerName;}
+document.getElementById("nameForm").addEventListener("submit",e=>{e.preventDefault();const name=playerNameInput.value.trim();if(!name){return}localStorage.setItem("jnb-player-name",name);document.getElementById("userEmail").textContent="Jogador: "+name;authScreen.classList.add("hidden");app.classList.remove("hidden");render()});
+document.getElementById("logout").addEventListener("click",()=>{localStorage.removeItem("jnb-player-name");app.classList.add("hidden");authScreen.classList.remove("hidden");playerNameInput.value="";playerNameInput.focus()});
 const games=[
-{name:"Poddleball",url:"https://poddleball.com/",cat:"Multijogador",icon:"🏓",desc:"Um jogo de pickleball que pode usar o telemóvel como comando."},
+{name:"Poddleball",url:"https://poddleball.com/",cat:"Desporto",icon:"🏸",desc:"Um jogo de pickleball que pode usar o telemóvel como comando."},
 {name:"EmuOS",url:"https://emupedia.net/beta/emuos/",cat:"Clássicos",icon:"🕹️",desc:"Um ambiente retro inspirado nos computadores antigos, com jogos e aplicações."},
 {name:"Messenger Abeto",url:"https://messenger.abeto.co/",cat:"Multijogador",icon:"💬",desc:"Um espaço online de mensagens e interação."},
 {name:"Krunker",url:"https://krunker.io/?game=FRA:8xqy3",cat:"Multijogador",icon:"🎯",desc:"Um jogo de ação multijogador diretamente no navegador."},
