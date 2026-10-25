@@ -43,7 +43,6 @@ document.getElementById("nameForm").addEventListener("submit",e=>{e.preventDefau
 document.getElementById("logout").addEventListener("click",()=>{localStorage.removeItem("jnb-player-name");app.classList.add("hidden");authScreen.classList.remove("hidden");playerNameInput.value="";playerNameInput.focus()});
 const games=[
 {name:"Poddleball",url:"https://poddleball.com/",cat:"Desporto",icon:"🏸",desc:"Um jogo de pickleball que pode usar o telemóvel como comando."},
-{name:"Messenger Abeto",url:"https://messenger.abeto.co/",cat:"Multijogador",icon:"💬",desc:"Um espaço online de mensagens e interação."},
 {name:"Krunker",url:"https://krunker.io/?game=FRA:8xqy3",cat:"Multijogador",icon:"🎯",desc:"Um jogo de ação multijogador diretamente no navegador."},
 {name:"Deadshot.io",url:"https://deadshot.io/",cat:"Multijogador",icon:"🎮",desc:"Um jogo de ação online com partidas rápidas."},
 {name:"Slow Roads",url:"https://slowroads.io/",cat:"Condução",icon:"🚗",desc:"Conduz por estradas intermináveis e paisagens tranquilas."},
