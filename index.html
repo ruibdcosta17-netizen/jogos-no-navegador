@@ -30,7 +30,7 @@
   <input id="search" class="search" type="search" placeholder="🔎 Procurar jogos e sites..." aria-label="Procurar">
 </div></header>
 <main><section class="hero"><div class="eyebrow">A tua zona de jogo</div><h2>Escolhe. Clica. <span>Joga.</span></h2><p>Uma coleção de jogos e experiências para abrir diretamente no navegador. Pesquisa, filtra por categoria e guarda os teus favoritos.</p></section>
-<nav class="filters"><button class="filter active" data-filter="Todos">Todos</button><button class="filter" data-filter="Arcada">Arcada</button><button class="filter" data-filter="Desporto">Desporto</button><button class="filter" data-filter="Condução">Condução</button><button class="filter" data-filter="Construção">Construção</button><button class="filter" data-filter="Clássicos">Clássicos</button><button class="filter" data-filter="Multijogador">Multijogador</button><button class="filter" data-filter="IO">IO</button><button class="filter" data-filter="Corridas">Corridas</button><button class="filter" data-filter="Puzzle">Puzzle</button><button class="filter" data-filter="Favoritos">♥ Favoritos</button></nav>
+<nav class="filters"><button class="filter active" data-filter="Todos">Todos</button><button class="filter" data-filter="Arcada">Arcada</button><button class="filter" data-filter="Desporto">Desporto</button><button class="filter" data-filter="Condução">Condução</button><button class="filter" data-filter="Construção">Construção</button><button class="filter" data-filter="Clássicos">Clássicos</button><button class="filter" data-filter="Multijogador">Multijogador</button><button class="filter" data-filter="IO">IO</button><button class="filter" data-filter="Corridas">Corridas</button><button class="filter" data-filter="Puzzle">Puzzle</button><button class="filter" data-filter="Estratégia">Estratégia</button><button class="filter" data-filter="Favoritos">♥ Favoritos</button></nav>
 <div id="count"></div><section id="grid" class="grid"></section><div id="empty" class="empty">Não encontrei resultados. Experimenta outra pesquisa ou categoria.</div></main>
 <footer>Feito para jogar no navegador · Jogos no Navegador © <span id="year"></span><br>Os jogos e serviços são externos e têm as suas próprias regras.</footer>
 </div>
@@ -55,7 +55,10 @@ const games=[
 {name:"Bloxd.io",url:"https://bloxd.io/",cat:"Construção",icon:"🧱",desc:"Explora mundos de blocos e experimenta modos como parkour e construção."},
 {name:"Moto X3M",url:"https://motox3m.io/",cat:"Condução",icon:"🏍️",desc:"Conduz uma mota por pistas cheias de obstáculos e desafios."},
 {name:"2048",url:"https://play2048.co/",cat:"Puzzle",icon:"🔢",desc:"Junta peças com o mesmo número para tentar chegar ao 2048."},
-{name:"Skribbl.io",url:"https://skribbl.io/",cat:"Multijogador",icon:"🎨",desc:"Desenha a palavra secreta e tenta adivinhar os desenhos dos outros jogadores."}
+{name:"Skribbl.io",url:"https://skribbl.io/",cat:"Multijogador",icon:"🎨",desc:"Desenha a palavra secreta e tenta adivinhar os desenhos dos outros jogadores."},
+{name:"Xadrez",url:"https://www.chess.com/play",cat:"Estratégia",icon:"♟️",desc:"Joga xadrez online e põe a tua estratégia à prova."},
+{name:"Paper.io 2",url:"https://paper-io.com/",cat:"IO",icon:"🟦",desc:"Conquista território e tenta proteger a tua zona."},
+{name:"Tetris",url:"https://tetris.com/play-tetris",cat:"Puzzle",icon:"🧩",desc:"Organiza os blocos que caem e completa linhas."}
 ];
 let filter="Todos",saved=[];try{saved=JSON.parse(localStorage.getItem("jnb-favs")||"[]")}catch(e){}
 const grid=document.getElementById("grid"),search=document.getElementById("search"),empty=document.getElementById("empty"),count=document.getElementById("count");
